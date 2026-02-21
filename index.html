@@ -1288,7 +1288,7 @@
           <label>Message</label>
           <textarea name="message" placeholder="Tell me about your project or opportunity..." required></textarea>
         </div>
-        <button type="submit" class="form-submit" id="submitBtn">Send Message →</button>
+        <button type="submit" class="form-submit" id="submitBtn" onclick="sendForm(event)">Send Message →</button>
         <p id="formStatus" style="margin-top:0.8rem;font-size:0.85rem;display:none;"></p>
       </form>
     </div>
@@ -1326,11 +1326,12 @@
     // ── Contact form (Formspree)
     const FORMSPREE_ID = 'mdalwkpk';
 
-    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    async function sendForm(e) {
       e.preventDefault();
+      const form = document.getElementById('contactForm');
       const btn = document.getElementById('submitBtn');
       const status = document.getElementById('formStatus');
-      const data = new FormData(this);
+      const data = new FormData(form);
 
       btn.textContent = 'Sending...';
       btn.disabled = true;
@@ -1350,7 +1351,7 @@
           status.textContent = '✅ Thanks! I\'ll get back to you soon.';
           status.style.color = '#2ecc71';
           status.style.display = 'block';
-          this.reset();
+          form.reset();
           setTimeout(() => {
             btn.textContent = 'Send Message →';
             btn.style.background = '';
@@ -1368,6 +1369,8 @@
         status.style.color = '#e74c3c';
         status.style.display = 'block';
       }
-    });
+    }
+
+    document.getElementById('contactForm').addEventListener('submit', sendForm);
 
  
